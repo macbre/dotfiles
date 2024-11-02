@@ -14,8 +14,8 @@ ping_host() {
 }
 
 # write to a temp file first
-echo "# HELP ping_time_ms Ping latency averaged from five packets sent." > /tmp/.pinger.prom
-echo "# TYPE ping_time_ms gauge" >> /tmp/.pinger.prom
+echo "# HELP ping_time_ms Ping latency averaged from five packets sent." > /tmp/.pinger.tmp
+echo "# TYPE ping_time_ms gauge" >> /tmp/.pinger.tmp
 
 for HOST in google.ie ring.local
 do
@@ -26,8 +26,8 @@ do
 
 	# and allow Promethesus to consume it too
 	# https://stackoverflow.com/a/68627646
-	echo "ping_time_ms{host=\"${HOST}\"} ${TIME}" >> /tmp/.pinger.prom
+	echo "ping_time_ms{host=\"${HOST}\"} ${TIME}" >> /tmp/.pinger.tmp
 done
 
 # and then atomically replace the one node-exporter consumes
-mv --force /tmp/.pinger.prom /tmp/pinger.prom
+mv --force /tmp/.pinger.tmp /tmp/pinger.prom
