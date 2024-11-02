@@ -4,6 +4,10 @@
 #
 # # grep ARGS /etc/default/prometheus-node-exporter 
 # ARGS="--collector.textfile.directory=/tmp"
+#
+# And add an entry to your crontab:
+# m h  dom mon dow   command
+# *   *  *   *   *     /bin/bash $HOME/ping_and_report.sh
 
 # Example:
 # --- google.ie ping statistics ---
