@@ -1,6 +1,9 @@
 #!/bin/bash
-# You need to be running the node-exporter with:
-# /usr/bin/prometheus-node-exporter --collector.textfile.directory=/tmp
+#
+# You need to be running the node-exporter with the "--collector.textfile.directory=/tmp" option to collect metrics from all "/tmp/*.prom" files
+#
+# # grep ARGS /etc/default/prometheus-node-exporter 
+# ARGS="--collector.textfile.directory=/tmp"
 
 # Example:
 # --- google.ie ping statistics ---
