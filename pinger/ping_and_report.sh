@@ -17,7 +17,7 @@
 
 ping_host() {
 	HOST=$1
-	echo "$(ping ${HOST} -c 5 | grep 'avg' | awk -F/ '{ print $5 }')"
+	echo "$(ping ${HOST} -W2 -c5 | grep 'avg' | awk -F/ '{ print $5 }')"
 }
 
 # write to a temp file first
