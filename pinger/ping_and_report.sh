@@ -15,9 +15,10 @@
 # rtt min/avg/max/mdev = 12.091/14.838/19.212/3.126 ms
 # 14.838
 
+# pings using IPv4 protocol
 ping_host() {
 	HOST=$1
-	echo "$(ping ${HOST} -W2 -c5 | grep 'avg' | awk -F/ '{ print $5 }')"
+	echo "$(ping4 ${HOST} -W2 -c5 | grep 'avg' | awk -F/ '{ print $5 }')"
 }
 
 # write to a temp file first
@@ -26,7 +27,13 @@ echo "# TYPE ping_time_ms gauge" >> /tmp/.pinger.tmp
 
 for HOST in google.ie ring.local
 do
-	TIME=$( ping_host ${HOST})
+	TIME=$( ping_host ${HOST} )
+
+	if [ -z "${TIME}" ]; then
+		# ping is unset or set to the empty string
+		logger --tag 'pinger' --id --stderr "Failed to ping ${HOST}, skipping it"
+		continue
+	fi
 
 	# send to syslog and stderr
 	logger --tag 'pinger' --id --stderr "Average ping time for ${HOST} is ${TIME} ms"
